@@ -15,7 +15,7 @@ dotenv.config();
 
 const cors = require("cors"); // Import the cors package
 
-// app.use(cors());
+app.use(cors());
 
 app.use(express.json());
 
@@ -34,18 +34,6 @@ mongoose
 app.use("/api/conversations", conversationRoute);
 app.use("/api/messages", messageRoute);
 
-const sslServer = https.createServer(
-  {
-    key: fs.readFileSync(path.join(__dirname, "cert", "key.pem")),
-    cert: fs.readFileSync(path.join(__dirname, "cert", "cert.pem")),
-  },
-  app,
-);
-
-// app.listen(8800, () => {
-//   console.log("Backend server is running!");
-// });
-
-sslServer.listen(3443, () => {
-  console.log("Backend server is running on port 3443");
+app.listen(8800, () => {
+  console.log("Backend server is running!");
 });
