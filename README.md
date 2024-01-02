@@ -78,6 +78,22 @@ Problem
               proxy_cache_bypass $http_upgrade;
               }
 
+              location /socket.io { # Proxy for Socket.io running on port 8900
+              proxy_pass http://localhost:8900; # Port where Socket.io is running
+              proxy_http_version 1.1;
+              proxy_set_header Upgrade $http_upgrade;
+              proxy_set_header Connection "upgrade";
+              proxy_set_header Host $host;
+              proxy_cache_bypass $http_upgrade;
+              }
+
+              # FOR SOCKET.IO IN YOUR FRONT END. CONNECT TO IT VIA..
+
+                   socket.current = io("wss://garagecutserver.com", {
+                      path: "/socket.io",
+                      transports: ["websocket"], // You can specify the transport type if needed
+                    });
+
           - SAVE: ctrl x
           - STATUS: sudo nginx -t
           - restart status: SUDO service nginx restart:
@@ -106,7 +122,3 @@ Problem
 - RUN this and read. It should renew automatically after 90 days
 
 certbot renew --dry-run
-
-- How I did it
-  - I went on NameCheap and paid for a domain
-  -
